@@ -1,0 +1,11 @@
+.field {
+  width: 100%;
+  border-radius: 0;
+}
+.btn-danger {
+  border-radius:0;
+}
+.centerBlock {
+  display: table;
+  margin: auto;
+}

@@ -1,24 +1,36 @@
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { MediaData } from './models/MediaData';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MediaService {
 
-  private baseUrl = 'http://localhost:8003/api';
+  private baseUrl = 'http://localhost:8003/upload';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
-  StoreFile(mediafile: Object): Observable<Object> {
-    return this.http.post('http://localhost:8003/api/storeImages', mediafile);
+  StoreMedia(mediafile: FormData, id: number): Observable<any> {
+    return this.http.post(this.baseUrl + '/storeImages/' + id, mediafile);
   }
-  getCustomerImages(id: number): Observable<any> {
-    return  this.http.get(this.baseUrl+'/downloadFile/'+id);
+  
+  getUserMedia(id: number): Observable<any> {
+    return  this.http.get(this.baseUrl + '/getUserMedia/' + id);
   }
-  // getCustomerImages1(id: number): Observable<any> {
-  //   return  this.http.get(this.baseUrl+'/downloadFiles/'+id );
-  // }
+
+  StoreData(mediafile: MediaData, id: number): Observable<object> {
+    return this.http.put('http://localhost:8003/upload/storeData/' + id, mediafile);
+  }
+
+  StoreProfile(formData: FormData, id: number): Observable<any> {
+    return this.http.post('http://localhost:8003/upload/storeProfile/' + id, formData);
+  }
+
+  getProfilePic(): Observable<any> {
+    return this.http.get('http://localhost:8003/upload/getProfile/' + this.userService.id);
+  }
+
 }

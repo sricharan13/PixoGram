@@ -1,0 +1,19 @@
+<br>
+<h1 *ngIf="users?.length === 0" class="centerBlock"> YOU DID NOT BLOCK ANY USERS </h1>
+<div class="row">
+    <div class="col-sm-4" *ngFor='let user of users'>
+        <div class="card" style="border-radius: 0">
+            <img class="card-img-top img-fluid" src="//placehold.it/500x200" alt="Profile Pic">
+            <div class="card-body">
+                <h6 class="text-muted">Username: {{user.username}}</h6>
+                <h6 class="text-muted">First Name: {{user.firstname}}</h6>
+                <h6 class="text-muted">Last Name: {{user.lastname}}</h6>
+                <h6 class="text-muted">Email: {{user.email}}</h6>
+            </div>
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-outline-danger field" (click)='unblock(user)'> Unblock </button>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>

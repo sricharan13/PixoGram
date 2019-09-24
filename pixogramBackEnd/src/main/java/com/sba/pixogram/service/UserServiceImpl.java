@@ -47,10 +47,6 @@ public class UserServiceImpl implements UserService {
 		return  q.getResultList();	
 		}
 
-	@Override
-	public User FollowUser(User u) {
-		return userRepository.save(u);
-	}
 
 	@Override
 	public Login createlogin(Login log) {
@@ -59,15 +55,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Login> Followers(Long userId) {
-		
-		return loginRepository.Followers(userId);
+	public void UpdateUser(Long id, String pass) {
+		loginRepository.UpdateUser(id,pass);
+		userRepository.UpdateUser(id, pass);
 	}
 
-	@Override
-	public List<Login> Following(Long userId) {
-		// TODO Auto-generated method stub
-		return loginRepository.Following(userId);
-	}
+
 	 
 }

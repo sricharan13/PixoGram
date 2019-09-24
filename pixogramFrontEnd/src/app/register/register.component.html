@@ -1,41 +1,75 @@
 <div class="row py-5">
   <div class="col-sm-4"></div>
   <div class="col-sm-4">
-    <form (ngSubmit)="onSubmit()">
-      <h1 class="text-center"> Register </h1>
+    <h1 class="text-center"> Register </h1>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="firstname"> Firstname </label>
-        <input type="text" [(ngModel)]="firstname" [ngModelOptions]="{standalone: true}" class="form-control field"
-          id="firstname" placeholder="Enter Firstname" required>
+        <label>First Name</label>
+        <input type="text" formControlName="firstName" [(ngModel)]="firstname" class="form-control field"
+          [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+          <div *ngIf="f.firstName.errors.required">First Name is required</div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="lastname"> Lastname </label>
-        <input type="text" [(ngModel)]="lastname" [ngModelOptions]="{standalone: true}" class="form-control field"
-          id="lastname" placeholder="Enter Lastname" required>
+        <label>Last Name</label>
+        <input type="text" formControlName="lastName" [(ngModel)]="lastname" class="form-control field"
+          [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+          <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="username"> Username </label>
-        <input type="text" [(ngModel)]="username" [ngModelOptions]="{standalone: true}" class="form-control field"
-          id="username" placeholder="Enter Username" required>
+        <label>User Name</label>
+        <input type="text" formControlName="userName" [(ngModel)]="username" class="form-control field"
+          [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+        <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+          <div *ngIf="f.userName.errors.required">User Name is required</div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="password"> Password </label>
-        <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control field"
-          id="password" placeholder="Enter Password" required>
+        <label>Password</label>
+        <input type="password" formControlName="password" [(ngModel)]="password" class="form-control field"
+          [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+          <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="rpassword"> Re Enter Password </label>
-        <input type="password" [(ngModel)]="rpassword" [ngModelOptions]="{standalone: true}" class="form-control field"
-          id="rpassword" placeholder="Enter Password Again" required>
+        <label>Confirm Password</label>
+        <input type="password" formControlName="confirmPassword" class="form-control field"
+          [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+          <div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+          <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="email"> Email Id </label>
-        <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control field"
-          id="email" placeholder="Enter email" required>
+        <label>Email</label>
+        <input type="text" formControlName="email" [(ngModel)]="email" class="form-control field"
+          [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+          <div *ngIf="f.email.errors.required">Email is required</div>
+          <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+        </div>
       </div>
       <div class="text-center">
-        <button type="submit" (click)=register() class="btn btn-danger"> Register and Login </button>
-      </div> <br>
+        <button class="btn btn-danger"> Register </button>
+      </div>
+      <br>
+      <div class="text-center" *ngIf="registerSuccess">
+        <h6> Upload Your Profile Pic </h6>
+        <div class="form-group">
+          <form (ngSubmit)="upload()" [formGroup]="form">
+            <input ng-model="file_upload" name="file" type="file" (change)="fileChange($event)" #fileInput>
+            <button type="submit" class="btn btn-danger"> Upload </button>
+          </form>
+        </div>
+      </div>
+      <br>
+      <h6 class="text-center"style="color: green;" *ngIf="uploadSuccess"> Registration Successful </h6>
+      <br>
       <p class="text-center"> Already have an account? <a [routerLink]="['/Login']"> Login Here </a> </p>
     </form>
   </div>

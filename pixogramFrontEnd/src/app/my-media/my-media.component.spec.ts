@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MyMediaComponent } from './my-media.component';
 
 describe('MyMediaComponent', () => {
@@ -8,6 +10,12 @@ describe('MyMediaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([]),
+        ReactiveFormsModule
+      ],
       declarations: [ MyMediaComponent ]
     })
     .compileComponents();
@@ -21,5 +29,13 @@ describe('MyMediaComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('src is null ',()=>{
+    expect(component.src).toBeNull;
+  });
+
+  it('images is null ',()=>{
+    expect(component.images).toBeNull;
   });
 });

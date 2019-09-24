@@ -1,30 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
 
   private baseUrl = 'http://localhost:8003/user';
 
   constructor(private http: HttpClient) { }
   
-  firstName: String = "";
-  username: String="";
-  id: number;
+  firstname: String = localStorage.getItem("firstname");
+  username: String = localStorage.getItem("username");
+  id: number = JSON.parse(localStorage.getItem('id'));
+  email: String = localStorage.getItem("email");
 
   getUser(id: number): Observable<Object> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
 
-  createUser(user: Object): Observable<Object> {
+  createUser(user: Object): Observable<any> {
     return this.http.post(`${this.baseUrl}` + `/create`,user);
   }
 
-  updateUser(id: number, value: any): Observable<Object> {
-    return this.http.put(`${this.baseUrl}/${id}`, value);
+  updateUser(password: string): Observable<Object> {
+    return this.http.put(this.baseUrl + '/' + this.id + '/' + password, { responseType: 'text' });
   }
 
   deleteUser(id: number): Observable<any> {
@@ -40,18 +42,39 @@ export class UserService {
   }
   
   getOtherUsers(): Observable<any> {
-    return this.http.get(this.baseUrl+'s/'+this.id);
+    return this.http.get(this.baseUrl + 's/' + this.id);
   }
 
-  follow(uid: number,fid:number ): Observable<Object> {
-    return this.http.get(this.baseUrl+'/'+uid+'/'+fid);
+  follow(uid: number, fid: number): Observable<Object> {
+    return this.http.get('http://localhost:8003/follow' + '/' + uid + '/' + fid);
   }
   
   following(uid: number): Observable<any> {
-    return this.http.get(this.baseUrl+'1/'+uid);
+    return this.http.get('http://localhost:8003/following/' + uid);
   }
+  
   followers(uid: number): Observable<any> {
-    return this.http.get(this.baseUrl+'2/'+uid);
+    return this.http.get('http://localhost:8003/followers/' + uid);
+  }
+
+  unfollow(uid:number, fid:number): Observable<any> {
+    return this.http.delete('http://localhost:8003/follow/unfollow/' + uid + '/' + fid);
+  }
+  
+  block(id: number) { 
+    return this.http.put('http://localhost:8003/follow/block/' + this.id + '/' + id, { responseType: 'text' })
+  }
+
+  getBlockedUsers() :Observable<any>{
+    return this.http.get('http://localhost:8003/follow/getblockedusers/' + this.id); 
+  }
+
+  unblock(id: number) {
+    return this.http.put('http://localhost:8003/follow/unblock/' + this.id + '/' + id, {responseType: 'text'})
+  }
+
+  viewProfile(id: string) {
+    localStorage.setItem("viewProfileId",id);
   }
 }
 

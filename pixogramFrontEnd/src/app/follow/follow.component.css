@@ -1,0 +1,7 @@
+.field {
+  border-radius: 0;
+}
+.centerBlock {
+  display: table;
+  margin: auto;
+}

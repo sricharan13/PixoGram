@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MediaService } from '../media.service';
 import { Media } from '../models/Media';
-import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { LazyLoadImageModule, intersectionObserverPreset, LoadImageProps } from 'ng-lazyload-image';
 
 @Component({
   selector: 'app-my-media',
@@ -11,15 +13,17 @@ import { UserService } from '../user.service';
 })
 export class MyMediaComponent implements OnInit {
   src: Media[];
+  public images: any = [];
+  srcString: String;
 
-  constructor(private sanitizer:DomSanitizer ,private mediaService: MediaService ,private userService: UserService) { }
-
-  sanitize(url:string) {
-    return this.sanitizer.bypassSecurityTrustUrl(url); 
-  }
+  constructor(private mediaService: MediaService ,private userService: UserService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.mediaService.getCustomerImages(this.userService.id).subscribe(response => this.src = response);
+    this.mediaService.getUserMedia(JSON.parse(localStorage.getItem("id"))).subscribe(response => this.src = response);
+  }
+
+  reload() {
+    window.location.reload();
   }
 
 }

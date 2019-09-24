@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginComponent } from '../login/login.component';
 import { AuthService } from '../auth.service';
-
-
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +10,8 @@ export class NavbarComponent  {
 
   constructor(public authService:AuthService) { }
 
-
-
-
+  onLogout() {
+    this.authService.changeToLogout();
+  }
+  
 }

@@ -12,63 +12,71 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "files")
 public class UploadPic {
-		
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "id")
 	private long id;
-		@Column
-	    private String fileName;
-		@Column
-	    private String fileType;
+	@Column
+	private String fileName;
+	@Column
+	private String fileType;
+	@Column
+	private long userId;
+	@Lob
+	private byte[] data;
 
-	    @Lob
-	    private byte[] data;
+	public UploadPic() {
+		super();
+	}
 
-		public UploadPic() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
+	public long getId() {
+		return id;
+	}
 
-//		public String getId() {
-//			return id;
-//		}
-//
-//		public void setId(String id) {
-//			this.id = id;
-//		}
+	public void setId(long id) {
+		this.id = id;
+	}
 
-		public String getFileName() {
-			return fileName;
-		}
+	public String getFileName() {
+		return fileName;
+	}
 
-		public void setFileName(String fileName) {
-			this.fileName = fileName;
-		}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-		public String getFileType() {
-			return fileType;
-		}
+	public String getFileType() {
+		return fileType;
+	}
 
-		public void setFileType(String fileType) {
-			this.fileType = fileType;
-		}
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
 
-		public byte[] getData() {
-			return data;
-		}
+	public byte[] getData() {
+		return data;
+	}
 
-		public void setData(byte[] data) {
-			this.data = data;
-		}
+	public void setData(byte[] data) {
+		this.data = data;
+	}
 
-		public UploadPic( String fileName, String fileType, byte[] data) {
-			super();
-			this.fileName = fileName;
-			this.fileType = fileType;
-			this.data = data;
-		}
-	    
-	    
-	
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public UploadPic( String fileName, String fileType, byte[] data,long userId) {
+		super();
+		this.fileName = fileName;
+		this.fileType = fileType;
+		this.data = data;
+		this.userId=userId;
+	}
+
 }

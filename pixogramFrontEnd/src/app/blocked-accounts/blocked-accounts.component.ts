@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { UserService } from '../user.service';
+import { Router } from '@angular/router';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-blocked-accounts',
@@ -7,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlockedAccountsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userService:UserService, private authService: AuthService, private router: Router) { }
 
-  ngOnInit() {
+  users:User[];
+
+  unblock(user:User) {
+    this.userService.unblock(user.id).subscribe();
+    window.location.reload();
   }
 
+  ngOnInit() {
+    this.userService.getBlockedUsers().subscribe(response=>this.users=response);
+  }
 }
